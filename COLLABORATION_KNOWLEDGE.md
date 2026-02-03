@@ -12,6 +12,10 @@
 - **Style:** Concise and direct
 - **Emojis:** No (unless explicitly requested)
 - **Detail Level:** Actionable information, not excessive explanations
+- **Prompt Optimization:** If user's prompt is sub-optimal, Claude should propose a better alternative BEFORE proceeding
+  - Explain why the alternative is better
+  - Allow user to choose between original and optimized version
+  - Applies to: task requests, architectural decisions, workflow choices
 
 ---
 
@@ -98,6 +102,13 @@ When relevant, suggest and use:
 - Build contribution-ready knowledge for central libraries
 - Include web links with descriptions for future reference
 
+**4. Prompt Optimization & Collaborative Refinement**
+- When user's prompt/request is sub-optimal, propose better alternative BEFORE execution
+- Explain rationale for alternative approach (efficiency, best practices, etc.)
+- Allow user to choose between original and optimized version
+- Builds user's understanding of best practices over time
+- Example: Suggesting session naming before work starts vs. trying to rename after
+
 #### What Works Well
 - (To be added as we discover effective patterns)
 
@@ -120,11 +131,13 @@ When relevant, suggest and use:
 4. **Forward-thinking** - Plans for multi-day collaboration upfront
 
 ### Patterns to Continue
-- Start each session by reviewing `PROJECT_CONTEXT.md` and `SESSION_LOG.md`
-- Update this knowledge base when we discover new learnings
-- Commit knowledge artifacts regularly (not just code)
-- Use metrics to inform process improvements
+- **Session naming upfront** - Name session at start, not after work is done
+- **Start each session** by reviewing `PROJECT_CONTEXT.md` and `SESSION_LOG.md`
+- **Update knowledge base** when we discover new learnings
+- **Commit regularly** at natural checkpoints (feature complete, research done, etc.)
+- **Use metrics** to inform process improvements
 - **Document all research** - Maintain curated research documents in `research/` with links and implications
+- **Prompt optimization** - Claude proposes better alternatives before executing sub-optimal requests
 
 ### Adjustments Needed
 - (To be added as we refine our process)

@@ -135,6 +135,34 @@
 - Set up project structure ✅
 - Create initial templates ✅
 
+#### 5. Session Naming and Organization
+**Learning:** Name sessions at the START, not after work is done.
+
+**What happened:**
+- Session 1: Named "agemtsmd-project-initiation" at start ✅
+- Session 2: Forgot to name, tried to rename after work done ❌
+- Renaming after work is awkward and may not work with all tools
+
+**Best Practice:**
+- Use `/rename <session-name>` at session start
+- Name should describe the session's focus (e.g., "mvp-project-scaffolding-setup")
+- Enables better session organization and context switching
+
+#### 6. Prompt Optimization & Collaborative Refinement
+**Learning:** Claude should propose better alternatives when user's prompt is sub-optimal, BEFORE executing.
+
+**Rationale:**
+- Builds user's understanding of best practices over time
+- Prevents rework (like trying to rename session after completion)
+- Collaborative learning vs. blindly executing sub-optimal requests
+- User always has choice: use original or optimized prompt
+
+**When to propose alternatives:**
+- Architectural/technical decisions with better approaches
+- Workflow requests that could be more efficient
+- Missing context that would improve outcomes
+- Timing issues (like session naming)
+
 ### Next Session Goals
 - [ ] Create second template (Software Architect OR Digital Marketer)
 - [ ] Set up Prisma database schema
