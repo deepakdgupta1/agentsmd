@@ -163,6 +163,25 @@
 - Missing context that would improve outcomes
 - Timing issues (like session naming)
 
+#### 7. Session Management & Context Budget Optimization
+**Learning:** Sessions should end at logical milestones within 40-60% context budget (80K-120K of 200K tokens).
+
+**Industry Research (2026):**
+- Optimal pair programming: 128K-200K token context window
+- Too much context = distraction/inefficiency
+- Too little context = lost coherence
+- Cost-context tradeoff: 128K-200K balances effectiveness with budget
+
+**Session End Triggers (Any One):**
+1. ✅ Logical milestone completed (feature done, research complete)
+2. ✅ Context budget 40-60% (efficient use + preserved buffer)
+3. ✅ Explicit user request (user control)
+4. ✅ Diminishing returns (stuck after 2-3 attempts)
+
+**Sweet Spot:** 1-3 hours of focused work typically hits 40-60% context
+
+**This Session:** ~87K/200K = 43.5% - Optimal timing to end ✅
+
 ### Next Session Goals
 - [ ] Create second template (Software Architect OR Digital Marketer)
 - [ ] Set up Prisma database schema

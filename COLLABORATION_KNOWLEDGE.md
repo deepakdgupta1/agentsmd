@@ -17,6 +17,47 @@
   - Allow user to choose between original and optimized version
   - Applies to: task requests, architectural decisions, workflow choices
 
+### Session Management Guidelines
+
+**When to End a Session (Any One Trigger):**
+
+1. **Logical Milestone Completed** ✅
+   - Feature fully implemented and working
+   - Research phase complete with documented findings
+   - Setup/configuration finished and tested
+   - Template(s) created and validated
+
+2. **Context Budget: 40-60%** ✅
+   - **Minimum 40%** (80K/200K tokens) - Efficient session use
+   - **Maximum 60%** (120K/200K tokens) - Preserve buffer, avoid inefficiency
+   - Current usage visible in system warnings
+   - Sweet spot: 1-3 hours of focused work
+
+3. **Explicit User Request** ✅
+   - User has final say on session length
+   - Can end earlier or continue based on needs
+
+4. **Diminishing Returns** ✅
+   - Stuck on same issue after 2-3 attempts
+   - Time to switch approaches or take break
+   - Better to code manually than force AI solution
+
+**Industry Best Practices (2026):**
+- Pair programming: 32K-128K tokens typical
+- Complex advisory: 200K-400K tokens for extended context
+- Optimal balance: 128K-200K tokens (effectiveness + cost efficiency)
+- Context balance critical: Too much = distraction, too little = lost coherence
+
+**Session Length Sweet Spot:**
+- 1-3 hours of focused work typically hits 40-60% context
+- Allows for meaningful progress without context bloat
+- Natural break points for reflection and commits
+
+**References:**
+- [Context Length Comparison: AI Models 2026](https://www.elvex.com/blog/context-length-comparison-ai-models-2026)
+- [Best LLMs for Extended Context Windows](https://research.aimultiple.com/ai-context-window/)
+- [Session Memory Management](https://cookbook.openai.com/examples/agents_sdk/session_memory)
+
 ---
 
 ## Claude Code Best Practices for This Collaboration
@@ -131,10 +172,12 @@ When relevant, suggest and use:
 4. **Forward-thinking** - Plans for multi-day collaboration upfront
 
 ### Patterns to Continue
-- **Session naming upfront** - Name session at start, not after work is done
+- **Session naming upfront** - Name session at start, not after work is done (use `/rename <name>`)
 - **Start each session** by reviewing `PROJECT_CONTEXT.md` and `SESSION_LOG.md`
+- **Monitor context budget** - Check token usage, aim for 40-60% per session
 - **Update knowledge base** when we discover new learnings
 - **Commit regularly** at natural checkpoints (feature complete, research done, etc.)
+- **End at logical milestones** - Don't artificially extend or cut short sessions
 - **Use metrics** to inform process improvements
 - **Document all research** - Maintain curated research documents in `research/` with links and implications
 - **Prompt optimization** - Claude proposes better alternatives before executing sub-optimal requests

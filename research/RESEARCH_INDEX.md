@@ -18,6 +18,9 @@ This directory contains curated research produced during the AGENTS.md Generator
 **Agent Configuration Standards**
 - [AGENTS.md Specification (2026)](./agents-md-specification-2026.md) - Official spec, best practices, and template structure
 
+**Workflow & Productivity**
+- [Session Management Best Practices (2026)](./session-management-2026.md) - Context window optimization, session length guidelines
+
 ---
 
 ## Usage Guidelines
