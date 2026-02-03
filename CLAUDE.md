@@ -38,13 +38,26 @@ See `PROJECT_CONTEXT.md` for detailed vision and use cases.
 ```
 
 ## Tech Stack
-**Status:** To be determined based on MVP priorities
+**Status:** ✅ Decided - 2026-02-03
 
-**Considerations:**
-- Frontend: TBD (React/Vue/Svelte)
-- Backend: TBD (Node.js/Python/Go)
-- Database: TBD
-- AI Integration: LLM API for content generation
+**Frontend & Backend:**
+- **Framework:** Next.js 14+ (App Router)
+- **Language:** TypeScript
+- **Styling:** TailwindCSS
+- **Editor:** CodeMirror 6
+
+**Database & ORM:**
+- **Database:** PostgreSQL
+- **ORM:** Prisma
+
+**Authentication:**
+- **Auth:** NextAuth.js
+
+**Hosting:**
+- **Platform:** Vercel (all-in-one)
+
+**Future:**
+- AI Integration: LLM API for content generation (post-MVP)
 
 ## Coding Conventions
 *To be established as we write code*

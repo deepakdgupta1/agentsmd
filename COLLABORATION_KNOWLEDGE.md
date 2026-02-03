@@ -75,13 +75,36 @@ When relevant, suggest and use:
 *To be populated as we work together*
 
 #### Technical Decisions
-- (To be added as we make architectural choices)
+- **Tailwind CSS v3 over v4**: v4 caused Turbopack errors with Next.js 16. v3 is stable and well-supported.
+
+#### Core Principles Established
+
+**1. Version Stability Over Bleeding Edge**
+- Choose stable, proven version combinations over latest releases
+- Priority: Working in one shot without errors > Having newest features
+- Park version upgrades as future optimization roadmap items
+- Example: Tailwind v3 (stable) vs v4 (caused Turbopack fatal error)
+- **Principle:** Stable foundation first, optimize later
+
+**2. Research Before Implementation**
+- Use WebSearch to research SOTA standards before building
+- Study best practices from existing implementations
+- Document research findings in `research/` directory
+- Example: Researched AGENTS.md spec from 2,500+ repos before creating templates
+
+**3. Documentation as Reusable Knowledge Assets**
+- Maintain structured research documents with sources and implications
+- Enable decision traceability (why we chose X over Y)
+- Build contribution-ready knowledge for central libraries
+- Include web links with descriptions for future reference
 
 #### What Works Well
 - (To be added as we discover effective patterns)
 
 #### What to Avoid
-- (To be added as we learn from mistakes)
+- **Don't use bleeding-edge versions without testing compatibility** - Latest ≠ Best. Use stable, proven combinations.
+- **Don't implement before researching** - SOTA standards inform better decisions upfront
+- **Don't skip documentation** - Learnings are valuable knowledge assets for future work
 
 #### Domain Knowledge
 - (To be added as we build expertise in agent configuration)
@@ -101,6 +124,7 @@ When relevant, suggest and use:
 - Update this knowledge base when we discover new learnings
 - Commit knowledge artifacts regularly (not just code)
 - Use metrics to inform process improvements
+- **Document all research** - Maintain curated research documents in `research/` with links and implications
 
 ### Adjustments Needed
 - (To be added as we refine our process)
@@ -119,6 +143,7 @@ When relevant, suggest and use:
 | Repetitive workflow | Suggest creating a Skill or Hook |
 | Project conventions | Document in CLAUDE.md |
 | Session learnings | Update this file + SESSION_LOG.md |
+| Research findings | Create curated doc in research/ with sources + implications |
 
 ---
 

@@ -3,7 +3,12 @@ node_modules/
 venv/
 env/
 .env
-.env.local
+.env*.local
+
+# Next.js
+.next/
+out/
+next-env.d.ts
 
 # Build outputs
 dist/
@@ -24,3 +29,9 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo

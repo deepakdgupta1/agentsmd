@@ -1,0 +1,15 @@
+[
+  {
+    "id": "software-tester",
+    "title": "Software Testing Agent",
+    "description": "Comprehensive quality assurance agent for unit, integration, and E2E testing. Includes test strategies, security testing, and bug reporting formats.",
+    "category": "Development",
+    "tags": ["testing", "qa", "unit-tests", "integration-tests", "security"],
+    "useCase": "Use this template when you need an AI agent to help with test creation, execution, and quality assurance across your codebase.",
+    "filename": "software-tester.md",
+    "version": "1.0",
+    "lines": 145,
+    "createdAt": "2026-02-03",
+    "updatedAt": "2026-02-03"
+  }
+]

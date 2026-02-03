@@ -44,6 +44,106 @@
 
 ---
 
+## Session 2: MVP Definition & Project Setup
+**Date:** 2026-02-03
+**Duration:** ~2 hours
+
+### Objectives
+- [x] Define MVP feature scope
+- [x] Choose tech stack
+- [x] Set up Next.js project structure
+- [x] Create first AGENTS.md template
+- [x] Research AGENTS.md specification
+
+### What We Accomplished
+1. **Researched SOTA standards** (4 web searches):
+   - AI code generation architecture (2026)
+   - Config generator platforms best practices
+   - Community rating systems
+   - AGENTS.md official specification
+2. **Defined MVP scope** (`MVP_SPEC.md`):
+   - 5 core features: Browse, Preview, Editor, Auth, Download
+   - 1-2 initial templates
+   - Web application approach
+3. **Selected tech stack** (Next.js + TypeScript + Tailwind + Prisma)
+4. **Set up Next.js project**:
+   - Full project structure with App Router
+   - Tailwind CSS v3 (fixed Turbopack error)
+   - Working dev server
+5. **Created first template**:
+   - Software Testing Agent (145 lines)
+   - Follows AGENTS.md best practices
+   - Includes metadata in `templates.json`
+
+### Decisions Made
+- **Tech Stack:** Next.js 16, TypeScript, Tailwind v3, Prisma, NextAuth
+- **Project Structure:** Docs at root (not monorepo for MVP)
+- **MVP Approach:** Template Library First (AI generation post-MVP)
+- **Initial Templates:** 1-2 templates (Software Tester created)
+
+### Blockers/Questions
+- None
+
+### Metrics
+- **Files Created:** 20+ (config, docs, research, templates, Next.js structure)
+- **Git Commits:** 0 (not yet committed)
+- **Research Documents:** 4 (AI generation, config platforms, community systems, AGENTS.md spec)
+- **Templates Created:** 1 (Software Tester)
+- **Token Usage:** ~72k/200k (36% of budget)
+- **Issues Fixed:** 1 (Turbopack error with Tailwind v4)
+
+### Key Learnings
+
+#### 1. Version Stability Over Bleeding Edge ⭐
+**Learning:** When choosing software versions for your tech stack, always prioritize **stable, proven version combinations** over latest releases.
+
+**Rationale:**
+- Priority is to get it working in one shot without errors
+- Latest versions may have incompatibilities (e.g., Tailwind v4 + Next.js 16 Turbopack)
+- Optimization through version upgrades can be parked as future roadmap activity
+- Developer velocity > having newest features
+
+**Example from this session:**
+- Tailwind v4 caused Turbopack fatal error
+- Downgraded to v3 (stable, well-tested with Next.js)
+- App worked immediately
+
+**Principle:** Stable foundation first, optimize later.
+
+#### 2. Research Before Building
+**Learning:** Comprehensive research of SOTA standards (via WebSearch) before implementation saves rework.
+
+**What worked:**
+- Researched AGENTS.md spec before creating templates
+- Studied best practices from 2,500+ repositories
+- Result: First template follows official standards (≤150 lines, commands first, code examples)
+
+#### 3. Documentation as Code
+**Learning:** Maintaining structured research documents (`research/`) creates reusable knowledge assets.
+
+**Benefits:**
+- Decision traceability (why we chose X over Y)
+- Future reference (when adding features)
+- Contribution-ready for central library
+
+#### 4. Task Tracking for Complex Projects
+**Learning:** Using TaskCreate/TaskUpdate helps maintain focus and track progress on multi-step work.
+
+**What we tracked:**
+- Define MVP scope ✅
+- Choose tech stack ✅
+- Set up project structure ✅
+- Create initial templates ✅
+
+### Next Session Goals
+- [ ] Create second template (Software Architect OR Digital Marketer)
+- [ ] Set up Prisma database schema
+- [ ] Build browse templates page
+- [ ] Create template preview component
+- [ ] Commit all progress to GitHub
+
+---
+
 ## Template for Future Sessions
 
 **Date:**
