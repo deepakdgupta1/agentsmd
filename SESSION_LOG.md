@@ -191,6 +191,80 @@
 
 ---
 
+## Session 3: Template UI & Database Foundation
+**Date:** 2026-02-04
+**Session Name:** template-ui-prisma-foundation
+**Duration:** ~1.5 hours
+
+### Objectives
+- [x] Create second template (Software Architect)
+- [x] Set up Prisma database schema
+- [x] Build browse templates page
+- [x] Create template preview component
+- [x] Commit all progress to GitHub
+
+### What We Accomplished
+1. **Collaboration Infrastructure**
+   - Moved collaboration preferences to universal GitHub Gist
+   - Enables consistent working style across all projects
+   - Created PROJECT_LEARNINGS.md for project-specific knowledge
+
+2. **Software Architect Template** (150 lines)
+   - System design patterns and principles
+   - API design standards
+   - Security architecture checklist
+   - Technical debt management
+
+3. **Browse Templates Page** (`/browse`)
+   - Grid layout with template cards
+   - Category filtering (client-side)
+   - Template metadata display (tags, lines, version)
+
+4. **Template Preview Page** (`/templates/[id]`)
+   - Full template content display
+   - Copy to clipboard functionality
+   - Download as AGENTS.md
+   - "Customize in Editor" link (editor not built yet)
+
+5. **Prisma 7 Database Schema**
+   - NextAuth.js compatible models (User, Account, Session, VerificationToken)
+   - SavedTemplate model for user customizations
+   - lib/db.ts Prisma client singleton
+
+### Decisions Made
+- **Universal Collaboration Knowledge**: GitHub Gist for cross-project preferences
+- **Prisma 7**: New config approach (prisma.config.ts instead of schema url)
+- **Static Generation**: Templates pre-rendered at build time via generateStaticParams
+
+### Blockers/Questions
+- None
+
+### Metrics
+- **Files Created/Modified:** 18
+- **Git Commits:** 2 (feat: templates UI, feat: Prisma schema)
+- **Features Completed:** 4 (template, browse page, preview page, db schema)
+- **Components Built:** 4 (TemplateCard, TemplateGrid, CategoryFilter, TemplatePreview)
+- **Templates Total:** 2 (Software Tester, Software Architect)
+
+### Key Learnings
+
+#### 1. Proactive Behavior Requires Auto-Loaded Hooks
+**Learning:** Documenting proactive behaviors in COLLABORATION_KNOWLEDGE.md alone isn't enough - CLAUDE.md must have explicit hooks to read and apply them.
+
+**Solution:** Session Start Protocol in CLAUDE.md that fetches universal preferences from GitHub Gist.
+
+#### 2. Prisma 7 Breaking Changes
+**Learning:** Prisma 7 moved DATABASE_URL configuration from schema.prisma to prisma.config.ts.
+
+**Impact:** Schema no longer contains `url = env("DATABASE_URL")` - it's now in the config file with dotenv import.
+
+### Next Session Goals
+- [ ] Revisit and refine product specifications
+- [ ] Plan editor feature implementation
+- [ ] Plan authentication setup
+
+---
+
 ## Template for Future Sessions
 
 **Date:**
