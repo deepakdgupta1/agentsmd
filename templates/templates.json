@@ -11,5 +11,18 @@
     "lines": 145,
     "createdAt": "2026-02-03",
     "updatedAt": "2026-02-03"
+  },
+  {
+    "id": "software-architect",
+    "title": "Software Architect Agent",
+    "description": "System design and architectural governance agent. Covers design patterns, API standards, database design, security architecture, and technical debt management.",
+    "category": "Development",
+    "tags": ["architecture", "system-design", "api-design", "security", "scalability"],
+    "useCase": "Use this template when you need an AI agent to guide architectural decisions, review system designs, and maintain technical standards.",
+    "filename": "software-architect.md",
+    "version": "1.0",
+    "lines": 150,
+    "createdAt": "2026-02-04",
+    "updatedAt": "2026-02-04"
   }
 ]

@@ -7,6 +7,17 @@ This file is automatically loaded by Claude Code for all sessions in this projec
 
 See `PROJECT_CONTEXT.md` for detailed vision and use cases.
 
+## Session Start Protocol
+
+**At the start of every session, immediately:**
+1. Read `SESSION_LOG.md` - Present the "Next Session Goals" from the most recent session
+2. Fetch universal collaboration preferences from gist and follow them:
+   - URL: https://gist.githubusercontent.com/deepakdgupta1/ef5b6bc76eacec99c43a41bc93012acb/raw/COLLABORATION_KNOWLEDGE.md
+   - Use WebFetch to retrieve and apply these guidelines
+3. Prompt user to rename session if not already done (e.g., "Would you like to name this session?")
+
+This is automatic - do not wait for user to ask.
+
 ## Working Principles
 
 ### Quality Standards
@@ -16,10 +27,7 @@ See `PROJECT_CONTEXT.md` for detailed vision and use cases.
 - Security-first: Watch for OWASP top 10 vulnerabilities
 
 ### Collaboration Style
-- **Proactive guidance expected** - Challenge suboptimal approaches
-- **Plan before implementing** - Use EnterPlanMode for complex features
-- **Ask questions** - Don't assume, clarify requirements
-- **Track everything** - Update SESSION_LOG.md and COLLABORATION_KNOWLEDGE.md
+Collaboration preferences are fetched from the universal gist (see Session Start Protocol). Apply them consistently across all sessions.
 
 ### Git Workflow
 - Create commits only when explicitly requested
@@ -30,11 +38,14 @@ See `PROJECT_CONTEXT.md` for detailed vision and use cases.
 ## Project Structure
 ```
 /
-├── PROJECT_CONTEXT.md          # Project vision and strategy
-├── SESSION_LOG.md              # Session metrics and progress
-├── COLLABORATION_KNOWLEDGE.md  # Working style and learnings
-├── CLAUDE.md                   # This file - project instructions
-└── .gitignore                  # Standard web dev ignores
+├── PROJECT_CONTEXT.md      # Project vision and strategy
+├── SESSION_LOG.md          # Session metrics and progress
+├── PROJECT_LEARNINGS.md    # Project-specific learnings and decisions
+├── CLAUDE.md               # This file - project instructions
+└── .gitignore              # Standard web dev ignores
+
+# Universal (external):
+# - COLLABORATION_KNOWLEDGE.md (GitHub Gist) - Working style preferences
 ```
 
 ## Tech Stack
@@ -70,4 +81,4 @@ See `PROJECT_CONTEXT.md` for detailed vision and use cases.
 
 ---
 
-**Last Updated:** 2026-02-03 (Session 1: Project Initiation)
+**Last Updated:** 2026-02-04 (Session 3: Moved collaboration preferences to universal gist)
