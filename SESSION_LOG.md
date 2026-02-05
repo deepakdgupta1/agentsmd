@@ -368,6 +368,111 @@ const prisma = new PrismaClient({ adapter });
 
 ---
 
+## Session 5: In-Browser Template Editor (Final MVP Feature)
+**Date:** 2026-02-05
+**Session Name:** editor-feature-mvp
+**Duration:** ~1 hour
+
+### Objectives
+- [x] Build the in-browser template editor (CodeMirror 6)
+- [x] Wire save/load templates to database for authenticated users
+- [x] Security review and fix all HIGH/MEDIUM issues
+
+### What We Accomplished
+1. **Template Editor** - Complete split-pane markdown editor at `/editor`
+   - CodeMirror 6 with markdown syntax highlighting and dark mode
+   - Live preview via react-markdown + remark-gfm + rehype-sanitize (XSS defense)
+   - Mobile responsive: stacked layout with Edit/Preview tab switcher
+   - Copy to clipboard, download as AGENTS.md, unsaved changes warning
+
+2. **Template Persistence API** - Full CRUD for saved templates
+   - `GET/POST /api/templates` - list and create
+   - `GET/PUT/DELETE /api/templates/[id]` - read, update, delete
+   - Auth-gated with atomic ownership checks (IDOR prevention)
+   - Input validation via `lib/validation.ts`
+
+3. **Server-Side Template Loading**
+   - `/editor` - blank editor
+   - `/editor?template={id}` - loads curated template from filesystem
+   - `/editor?saved={id}` - loads from DB with auth + ownership check
+
+4. **Security Review & Fixes** (via parallel subagent)
+   - Found 22 issues (5 HIGH, 6 MEDIUM, 11 LOW)
+   - Fixed all HIGH/MEDIUM: focus trap, Escape key, backdrop close, ARIA attributes, TOCTOU race conditions, React hooks correctness, validation gaps
+   - Remaining LOW items deferred to post-MVP
+
+5. **Accessible Save Modal**
+   - Focus trap, Escape to close, backdrop click to close
+   - `role="dialog"`, `aria-modal`, `aria-labelledby`, `aria-required`
+   - Error display via `role="alert"`
+
+### Decisions Made
+- **Atomic ownership checks:** Compound `where: { id, userId }` with `updateMany`/`deleteMany` instead of check-then-act (eliminates TOCTOU race conditions)
+- **Refs for save handlers:** `contentRef`, `templateNameRef`, `savedIdRef` avoid re-creating `handleSave` on every keystroke
+- **Manual focus trap:** Implemented directly instead of adding `focus-trap-react` dependency for MVP
+- **Subagent for security:** Parallel `general-purpose` agent reviewed all 8 files while build ran concurrently
+
+### Blockers/Questions
+- None
+
+### Metrics
+- **Files Created:** 9 (validation, 2 API routes, 5 editor components, page)
+- **Files Modified:** 3 (globals.css, package.json, bun.lock)
+- **Git Commits:** 1 (`feat(editor): Add in-browser template editor with CodeMirror 6`)
+- **Features Completed:** 3 (editor UI, template persistence API, server-side template loading)
+- **Bugs Fixed:** 5 HIGH + 6 MEDIUM security/accessibility issues from review
+- **Tests Written:** 0 (manual verification only)
+- **Rework Required:** Yes - security review found issues that required rewriting 5 files after initial implementation
+
+### Key Learnings
+
+#### 1. Parallel Security Review via Subagent
+**Learning:** Running a security review as a background subagent while the build runs is an effective pattern. The review found 22 issues (5 HIGH) that would have shipped otherwise.
+
+**Tradeoff:** The `TaskOutput` return format is verbose (raw JSONL transcript), consuming ~10% of session tokens for data exchange. Use subagents only when review complexity justifies the overhead.
+
+#### 2. Atomic Ownership Checks Over Check-Then-Act
+**Learning:** Prisma's `updateMany`/`deleteMany` with compound `where: { id, userId }` clauses are atomic. The previous pattern of `findUnique` + separate `update`/`delete` creates a TOCTOU race condition window.
+
+**Pattern:**
+```typescript
+// BAD: Two queries, race condition possible
+const existing = await prisma.model.findUnique({ where: { id } });
+if (existing.userId !== session.user.id) return 404;
+await prisma.model.delete({ where: { id } });
+
+// GOOD: Single atomic query
+const { count } = await prisma.model.deleteMany({
+  where: { id, userId: session.user.id },
+});
+if (count === 0) return 404;
+```
+
+#### 3. Refs Solve useCallback Stale Closure Problem
+**Learning:** When a `useCallback` handler needs current state but shouldn't re-create on every state change (e.g., save handler reading `content` that changes on every keystroke), use refs synced via `useEffect`. This keeps the handler identity stable while always reading fresh values.
+
+#### 4. Accessibility Must Be Built In, Not Bolted On
+**Learning:** The initial SaveModal had 5 HIGH accessibility issues (no focus trap, no Escape, no backdrop close, no ARIA). These are fundamental modal behaviors, not nice-to-haves. Building modals without these from the start creates rework.
+
+**Checklist for future modals:** `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, focus trap, Escape key, backdrop click, `aria-live` for errors, focus restoration on close.
+
+#### 5. Subagent Token Cost -- Two Levers, Not One
+**Learning:** Subagent token waste has two independent causes: (1) the subagent prompt didn't specify a concise output format, so the agent produced ~3,000 words when a table would have sufficed; (2) `TaskOutput` returns the full JSONL conversation transcript, not just the final message.
+
+**Mitigations:**
+- **Prompt-side:** Always specify desired output format in the subagent prompt (e.g., "Return ONLY a markdown table with columns: Severity, File, Line(s), Issue, Category")
+- **Transport-side:** Instruct the subagent to write findings to a scratchpad file, then use the Read tool to retrieve it directly -- bypasses the JSONL transcript entirely
+
+**Self-critique:** The initial learning attributed all waste to the external tool format (TaskOutput). This missed the controllable factor (prompt quality) -- a case of attribution bias.
+
+### Next Session Goals
+- [ ] Push to GitHub
+- [ ] Revisit and refine product specifications
+- [ ] Test all 10 verification items end-to-end with dev server running
+- [ ] Consider post-MVP items: rate limiting, keyboard shortcuts (Ctrl+S), Tailwind class-based dark mode sync
+
+---
+
 ## Template for Future Sessions
 
 **Date:**
