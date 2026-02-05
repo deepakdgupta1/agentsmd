@@ -25,3 +25,12 @@ body {
     text-wrap: balance;
   }
 }
+
+/* CodeMirror editor overrides */
+.cm-editor {
+  height: 100% !important;
+}
+
+.cm-editor .cm-scroller {
+  overflow: auto !important;
+}
