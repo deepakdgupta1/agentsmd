@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import { getTemplates, getCategories } from '@/lib/templates';
 import { TemplateGrid } from '@/components/TemplateGrid';
+import { Header } from '@/components/Header';
 
 export const metadata = {
   title: 'Browse Templates - AGENTS.md Generator',
@@ -13,27 +13,7 @@ export default function BrowsePage() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold">
-            AGENTS.md
-          </Link>
-          <nav className="flex gap-4">
-            <Link
-              href="/browse"
-              className="text-blue-600 dark:text-blue-400 font-medium"
-            >
-              Browse
-            </Link>
-            <Link
-              href="/editor"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            >
-              Editor
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header activePage="browse" />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getTemplates, getTemplateById, getTemplateContent } from '@/lib/templates';
 import { TemplatePreview } from '@/components/TemplatePreview';
+import { Header } from '@/components/Header';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -35,27 +36,7 @@ export default async function TemplatePage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold">
-            AGENTS.md
-          </Link>
-          <nav className="flex gap-4">
-            <Link
-              href="/browse"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            >
-              Browse
-            </Link>
-            <Link
-              href="/editor"
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
-            >
-              Editor
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-6">
