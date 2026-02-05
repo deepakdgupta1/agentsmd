@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: agentsmd-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: agentsmd
+      POSTGRES_USER: agentsmd
+      POSTGRES_PASSWORD: agentsmd_dev_2026
+    volumes:
+      - agentsmd_pgdata:/var/lib/postgresql/data
+
+volumes:
+  agentsmd_pgdata:

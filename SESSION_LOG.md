@@ -265,21 +265,24 @@
 
 ---
 
-## Session 4: Project Team Setup & Google OAuth
-**Date:** 2026-02-04
-**Session Name:** project-team-setup
-**Duration:** ~1.5 hours
+## Session 4: Team Setup, Google OAuth & Database
+**Date:** 2026-02-05
+**Session Name:** team-auth-db-setup
+**Duration:** ~2 hours
 
 ### Objectives
 - [x] Research 2026 multi-agent orchestration patterns
 - [x] Set up custom subagent team for the project
 - [x] Implement Google OAuth authentication
-- [ ] Set up local PostgreSQL database (deferred - user to set up)
+- [x] Set up PostgreSQL database
+- [x] Run Prisma migrations
+- [x] Test Google OAuth end-to-end
 
 ### What We Accomplished
 
 1. **Multi-Agent Team Setup**
-   - Researched 2026 multi-agent patterns (Microsoft, Google ADK, LangGraph)
+   - Researched 2026 multi-agent patterns (Microsoft Azure, Google ADK, LangGraph)
+   - Key finding: industry undergoing "microservices revolution" for AI agents
    - Created 6 custom subagents in `.claude/agents/`:
      - `architect` - System design & planning (Sonnet)
      - `developer` - Implementation (Inherit)
@@ -287,59 +290,81 @@
      - `tester` - Test execution & QA (Haiku)
      - `ux-reviewer` - UI/UX & accessibility (Sonnet)
      - `product-manager` - Requirements & prioritization (Sonnet)
-   - Documented team structure in `TEAM.md`
+   - Documented hub-and-spoke team structure in `TEAM.md`
 
-2. **Google OAuth Authentication** (Auth.js v5)
+2. **Google OAuth Authentication** (Auth.js v5) - WORKING END-TO-END
    - Split config pattern: `auth.config.ts` (edge) + `auth.ts` (server)
    - JWT session strategy for edge compatibility
    - Prisma adapter integration for user persistence
-   - Protected route middleware
-   - UI components: SignInButton, UserMenu, AuthStatus, Header
+   - Protected route middleware for `/dashboard`, `/my-templates`
+   - UI components: SignInButton (Google logo), UserMenu (avatar dropdown), AuthStatus, Header
    - Custom sign-in page at `/signin`
-   - Updated Prisma client for v7 adapter pattern
+   - Google email verification required on sign-in
+   - Successfully tested: sign in → user created in DB → avatar displayed → sign out
 
-3. **Codebase Improvements**
-   - Replaced inline headers with shared `Header` component
+3. **PostgreSQL Database**
+   - Docker container `agentsmd-postgres` on port 5433 (5432 used by system PostgreSQL)
+   - `docker-compose.yml` for reproducible setup
+   - Prisma migration `init_auth_and_templates` applied
+   - 5 tables created: User, Account, Session, VerificationToken, SavedTemplate
+
+4. **Codebase Improvements**
+   - Replaced inline headers with shared `Header` component across all pages
    - Fixed Prisma 7 client import path and adapter requirements
-   - Added `.env.example` for documentation
+   - Added `.env.example` for credential documentation
    - Added Google image domains to Next.js config
+   - Generated NEXTAUTH_SECRET
 
 ### Decisions Made
 - **Auth Strategy:** JWT sessions (edge-compatible) with Prisma adapter for user storage
 - **Session Management:** Auth.js v5 (NextAuth v5 beta) - official Next.js recommendation
 - **Team Architecture:** Hub-and-spoke model with main Claude as orchestrator
 - **Agent Models:** Haiku for fast read-only tasks, Sonnet for analysis, Inherit for implementation
+- **Database:** Docker PostgreSQL on port 5433 to avoid conflict with system PostgreSQL 16
+- **Session Name:** Renamed from `project-team-setup` to `team-auth-db-setup` to reflect full scope
 
 ### Blockers/Questions
-- User needs to set up Google Cloud Console OAuth credentials
-- User needs to set up PostgreSQL database and run migrations
-- Next.js 16 deprecation warning: "middleware" → "proxy" (still works, monitor)
+- Next.js 16 deprecation warning: "middleware" → "proxy" (still works, monitor for future)
+- Docker credential helper had stale "desktop" config (fixed by clearing `credsStore`)
 
 ### Metrics
-- **Files Created:** 19 (6 agents, 12 auth files, 1 team doc)
-- **Files Modified:** 7 (layout, browse page, template page, next.config, db.ts, package.json, bun.lock)
-- **Git Commits:** 2 (team setup, auth implementation)
-- **Features Completed:** 2 (multi-agent team, Google OAuth)
-- **Bugs Fixed:** 2 (Prisma 7 import path, Prisma 7 adapter requirement)
-- **Rework Required:** Yes - Prisma 7 breaking changes required adapter pattern
+- **Files Created:** 22 (6 agents, 12 auth files, 1 team doc, 1 docker-compose, 1 migration, 1 env.example)
+- **Files Modified:** 8 (layout, browse page, template page, next.config, db.ts, package.json, bun.lock, .env)
+- **Git Commits:** 3 (team setup, auth implementation, db & migrations)
+- **Features Completed:** 3 (multi-agent team, Google OAuth, database setup)
+- **Bugs Fixed:** 3 (Prisma 7 import path, Prisma 7 adapter requirement, Docker credential helper)
+- **Rework Required:** Yes - Prisma 7 breaking changes required adapter pattern + import path fix
 
 ### Key Learnings
 
 #### 1. Custom Subagents vs Task Tool
 **Learning:** Custom subagents defined in `.claude/agents/` are auto-invoked by Claude based on task matching. They cannot be spawned directly via the Task tool - the Task tool only supports built-in agent types (Explore, Plan, Bash, general-purpose).
 
+**Impact:** Team orchestration works through the main conversation delegating naturally, not through explicit Task tool calls with custom agent names.
+
 #### 2. Prisma 7 Requires Adapter for Direct DB
-**Learning:** Prisma 7 removed the built-in query engine. Direct database connections require `@prisma/adapter-pg` with an explicit adapter instance passed to PrismaClient constructor.
+**Learning:** Prisma 7 removed the built-in Rust query engine. Direct database connections require `@prisma/adapter-pg` with an explicit adapter instance passed to PrismaClient constructor.
+
+**Code Pattern:**
+```typescript
+import { PrismaPg } from '@prisma/adapter-pg';
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
+```
 
 #### 3. Prisma 7 Generated Client Path
 **Learning:** Prisma 7's generated client exports from `client.ts`, not an index file. Import must be `./generated/prisma/client` not `./generated/prisma`.
 
+#### 4. Auth.js v5 Split Config for Edge
+**Learning:** Prisma adapter cannot run on Edge runtime. Auth.js v5 requires splitting config into `auth.config.ts` (edge-compatible, used by middleware) and `auth.ts` (full config with adapter, server-only).
+
+#### 5. Docker Credential Helper Conflicts
+**Learning:** Docker Desktop `credsStore: "desktop"` in `~/.docker/config.json` breaks pulls on systems without Docker Desktop. Fix: set `credsStore` to empty string.
+
 ### Next Session Goals
-- [ ] Set up PostgreSQL database (local Docker or cloud)
-- [ ] Run Prisma migrations
-- [ ] Test Google OAuth end-to-end
 - [ ] Build the in-browser template editor (CodeMirror 6)
 - [ ] Revisit and refine product specifications
+- [ ] Wire save/load templates to database for authenticated users
 
 ---
 
